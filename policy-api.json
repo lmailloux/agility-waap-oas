@@ -1,6 +1,6 @@
 {
     "policy": {
-        "name": "policy-api-arcadia",
+        "name": "policy-api-arcadia-gh",
         "description": "Arcadia API",
         "template": {
             "name": "POLICY_TEMPLATE_API_SECURITY"
