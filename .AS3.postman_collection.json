@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "dd43212e-af5d-47ae-aff9-7b1d13dd8f34",
+		"name": ".AS3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Verify AS3 is running",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://10.1.1.4/mgmt/shared/appsvcs/info",
+					"protocol": "https",
+					"host": [
+						"10",
+						"1",
+						"1",
+						"4"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Declaration",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://10.1.1.4/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"10",
+						"1",
+						"1",
+						"4"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deploy w/ No Security",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"class\": \"AS3\",\r\n    \"action\": \"deploy\",\r\n    \"persist\": true,\r\n    \"declaration\": {\r\n        \"class\": \"ADC\",\r\n        \"schemaVersion\": \"3.2.0\",\r\n        \"id\": \"Prod_API_AS3\",\r\n        \"arcadia-prod\": {\r\n            \"class\": \"Tenant\",\r\n            \"defaultRouteDomain\": 0,\r\n            \"API\": {\r\n                \"class\": \"Application\",\r\n                \"template\": \"generic\",\r\n                \"vs_arcadia\": {\r\n                    \"class\": \"Service_HTTPS\",\r\n                    \"remark\": \"Arcadia Finance Application\",\r\n                    \"virtualAddresses\": [\"10.1.10.100\"],\r\n                    \"redirect80\": false,\r\n                    \"pool\": \"pool_arcadia\",\r\n                    \"profileTCP\": {\r\n                        \"egress\": \"wan\",\r\n                        \"ingress\": { \"use\": \"TCP_Profile\" } },\r\n                    \"profileHTTP\": { \"use\": \"custom_http_profile\" },\r\n                    \"serverTLS\": { \"bigip\": \"/Common/ITC_Client_SSL\" }\r\n                },\r\n                \"pool_arcadia\": {\r\n                    \"class\": \"Pool\",\r\n                    \"monitors\": [\"http\"],\r\n                    \"members\": [{\r\n                        \"servicePort\": 80,\r\n                        \"serverAddresses\": [\"10.1.20.5\"]\r\n                    }]\r\n                },\r\n                \"custom_http_profile\": {\r\n                    \"class\": \"HTTP_Profile\",\r\n                    \"xForwardedFor\": true\r\n                },\r\n                \"TCP_Profile\": {\r\n                    \"class\": \"TCP_Profile\",\r\n                    \"idleTimeout\": 60 }\r\n            }\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://10.1.1.4/mgmt/shared/appsvcs/declare",
+					"protocol": "https",
+					"host": [
+						"10",
+						"1",
+						"1",
+						"4"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"appsvcs",
+						"declare"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
