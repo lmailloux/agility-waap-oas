@@ -1,0 +1,475 @@
+{
+	"info": {
+		"_postman_id": "b4e41f46-f4f1-49f4-a752-c7815c9515b7",
+		"name": "PetStore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Deploy",
+			"item": [
+				{
+					"name": "Deploy App - No Security",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"connection": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"class\": \"AS3\",\r\n    \"action\": \"deploy\",\r\n    \"persist\": true,\r\n    \"declaration\": {\r\n        \"class\": \"ADC\",\r\n        \"schemaVersion\": \"3.2.0\",\r\n        \"id\": \"Prod_API_AS3\",\r\n        \"petstore-prod\": {\r\n            \"class\": \"Tenant\",\r\n            \"defaultRouteDomain\": 0,\r\n            \"API\": {\r\n                \"class\": \"Application\",\r\n                \"template\": \"generic\",\r\n                \"VS_API_petstore\": {\r\n                    \"class\": \"Service_HTTPS\",\r\n                    \"remark\": \"Accepts HTTPS/TLS connections on port 443\",\r\n                    \"virtualAddresses\": [\"10.1.10.110\"],\r\n                    \"redirect80\": true,\r\n                    \"pool\": \"pool_petstore\",\r\n                    \"profileTCP\": {\r\n                        \"egress\": \"wan\",\r\n                        \"ingress\": { \"use\": \"TCP_Profile\" } },\r\n                    \"profileHTTP\": { \"use\": \"custom_http_profile\" },\r\n                    \"serverTLS\": { \"bigip\": \"/Common/ITC_Client_SSL\" }\r\n                },\r\n                \"pool_petstore\": {\r\n                    \"class\": \"Pool\",\r\n                    \"monitors\": [\"http\"],\r\n                    \"members\": [{\r\n                        \"servicePort\": 88,\r\n                        \"serverAddresses\": [\"10.1.20.5\"]\r\n                    }]\r\n                },\r\n                \"custom_http_profile\": {\r\n                    \"class\": \"HTTP_Profile\",\r\n                    \"xForwardedFor\": true\r\n                },\r\n                \"TCP_Profile\": {\r\n                    \"class\": \"TCP_Profile\",\r\n                    \"idleTimeout\": 60 }\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://10.1.1.4/mgmt/shared/appsvcs/declare",
+							"protocol": "https",
+							"host": [
+								"10",
+								"1",
+								"1",
+								"4"
+							],
+							"path": [
+								"mgmt",
+								"shared",
+								"appsvcs",
+								"declare"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy w/ OpenAPI & WAF",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"connection": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"class\": \"AS3\",\r\n    \"action\": \"deploy\",\r\n    \"persist\": true,\r\n    \"declaration\": {\r\n        \"class\": \"ADC\",\r\n        \"schemaVersion\": \"3.2.0\",\r\n        \"id\": \"Prod_API_AS3\",\r\n        \"petstore-prod\": {\r\n            \"class\": \"Tenant\",\r\n            \"defaultRouteDomain\": 0,\r\n            \"API\": {\r\n                \"class\": \"Application\",\r\n                \"template\": \"generic\",\r\n                \"VS_API_petstore\": {\r\n                    \"class\": \"Service_HTTPS\",\r\n                    \"remark\": \"Accepts HTTPS/TLS connections on port 443\",\r\n                    \"virtualAddresses\": [\"10.1.10.110\"],\r\n                    \"redirect80\": true,\r\n                    \"pool\": \"pool_petstore\",\r\n                    \"policyWAF\": {\r\n                        \"use\": \"policy-api-petstore\"\r\n                    },\r\n                    \"securityLogProfiles\": [{\r\n                        \"bigip\": \"/Common/Log all requests\"\r\n                    }],\r\n                    \"profileTCP\": {\r\n                        \"egress\": \"wan\",\r\n                        \"ingress\": { \"use\": \"TCP_Profile\" } },\r\n                    \"profileHTTP\": { \"use\": \"custom_http_profile\" },\r\n                    \"serverTLS\": { \"bigip\": \"/Common/ITC_Client_SSL\" }\r\n                },\r\n                \"policy-api-petstore\": {\r\n                    \"class\": \"WAF_Policy\",\r\n                    \"url\": \"http://repo.itc.demo:8282/petstore/policy-api-petstore.json\",\r\n                    \"ignoreChanges\": true\r\n                },\r\n                \"pool_petstore\": {\r\n                    \"class\": \"Pool\",\r\n                    \"monitors\": [\"http\"],\r\n                    \"members\": [{\r\n                        \"servicePort\": 88,\r\n                        \"serverAddresses\": [\"10.1.20.5\"]\r\n                    }]\r\n                },\r\n                \"custom_http_profile\": {\r\n                    \"class\": \"HTTP_Profile\",\r\n                    \"xForwardedFor\": true\r\n                },\r\n                \"TCP_Profile\": {\r\n                    \"class\": \"TCP_Profile\",\r\n                    \"idleTimeout\": 60 }\r\n            }\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://10.1.1.4/mgmt/shared/appsvcs/declare",
+							"protocol": "https",
+							"host": [
+								"10",
+								"1",
+								"1",
+								"4"
+							],
+							"path": [
+								"mgmt",
+								"shared",
+								"appsvcs",
+								"declare"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete App",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://10.1.1.4/mgmt/shared/appsvcs/declare/petstore-prod",
+							"protocol": "https",
+							"host": [
+								"10",
+								"1",
+								"1",
+								"4"
+							],
+							"path": [
+								"mgmt",
+								"shared",
+								"appsvcs",
+								"declare",
+								"petstore-prod"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test API",
+			"item": [
+				{
+					"name": "List Available Pets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.itc.demo/v2/pet/findByStatus?status=available",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"itc",
+								"demo"
+							],
+							"path": [
+								"v2",
+								"pet",
+								"findByStatus"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "available"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Pet ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.itc.demo/v2/pet/7",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"itc",
+								"demo"
+							],
+							"path": [
+								"v2",
+								"pet",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Place Order for Pet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"petId\": 7,\r\n    \"quantity\": 1,\r\n    \"shipDate\": \"2020-08-18T10:10:30.747Z\",\r\n    \"status\": \"placed\",\r\n    \"complete\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.itc.demo/v2/store/order",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"itc",
+								"demo"
+							],
+							"path": [
+								"v2",
+								"store",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Status of Order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.itc.demo/v2/store/order/12",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"itc",
+								"demo"
+							],
+							"path": [
+								"v2",
+								"store",
+								"order",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET - no auth",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GET - Auth",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attacks",
+			"item": [
+				{
+					"name": "Injection Attack Encoded",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.itc.demo/v2/user/login?username=%27%20or%201%3D1%3B--%26password%3Dtest",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"itc",
+								"demo"
+							],
+							"path": [
+								"v2",
+								"user",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "%27%20or%201%3D1%3B--%26password%3Dtest"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Injection Attack",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.itc.demo/v2/user/login?username=\\' or 1=1;--&password=test",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"itc",
+								"demo"
+							],
+							"path": [
+								"v2",
+								"user",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "\\' or 1=1;--"
+								},
+								{
+									"key": "password",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid Order",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"petId\": 7,\r\n    \"quantity\": 1,\r\n    \"shipDate\": \"2023-06-18T10: 10: 30.747Z\",  \r\n    \"status\": \"paid\",  \r\n    \"complete\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.itc.demo/v2/store/order",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"itc",
+								"demo"
+							],
+							"path": [
+								"v2",
+								"store",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Missing Parameter",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.itc.demo/v2/user/login?username=admin",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"itc",
+								"demo"
+							],
+							"path": [
+								"v2",
+								"user",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "XSS",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.itc.demo/v2/user/login/<script>alert(\"TEST\");</script>",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"itc",
+								"demo"
+							],
+							"path": [
+								"v2",
+								"user",
+								"login",
+								"<script>alert(\"TEST\");<",
+								"script>"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
