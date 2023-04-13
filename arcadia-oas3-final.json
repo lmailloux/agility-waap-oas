@@ -1,0 +1,288 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Arcadia Finance",
+    "description": "Arcadia OpenAPI",
+    "version": "2.0.1-oas3"
+  },
+  "servers": [
+    {
+      "url": "https://arcdev.itc.demo"
+    }
+  ],
+  "paths": {
+    "/trading/rest/buy_stocks.php": {
+      "post": {
+        "summary": "Add stocks to your portfolio",
+        "parameters": [
+          {
+            "name": "trans_value",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "qty",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "company",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                      "MSFT",
+                      "FFIV",
+                      "AMZN"
+              ]
+            }
+          },
+          {
+            "name": "action",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stock_price",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "trans_value": "312",
+                "qty": "16",
+                "company": "MSFT",
+                "action": "buy",
+                "stock_price": "198"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "name": "Microsoft",
+                  "qty": "16",
+                  "amount": "312",
+                  "transid": "855415223"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rest/execute_money_transfer.php": {
+      "post": {
+        "summary": "Transfer money to a friend",
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "account",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "currency",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "friend",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "account": "2075894",
+                "amount": "2500",
+                "currency": "USD",
+                "friend": "Bart"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "name": "Bart",
+                  "status": "success",
+                  "amount": "2500",
+                  "currency": "USD",
+                  "transid": "620163956"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trading/rest/sell_stocks.php": {
+      "post": {
+        "summary": "Sell stocks that you own",
+        "parameters": [
+          {
+            "name": "trans_value",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "qty",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "company",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stock_price",
+            "in": "body",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "trans_value": "212",
+                "qty": "16",
+                "company": "MSFT",
+                "action": "sell",
+                "stock_price": "158"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "success",
+                  "name": "Microsoft",
+                  "qty": "16",
+                  "amount": "212",
+                  "transid": "658854124"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trading/transactions.php": {
+      "get": {
+        "summary": "Get the latests transactions that have happened",
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "YourLastTransaction": "MFST 2000"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {}
+}
